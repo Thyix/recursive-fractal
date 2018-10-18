@@ -14,10 +14,10 @@ std::vector<glm::vec3> sommets;
 int levelmax = 5; // maximum level of recursion
 int nleaf = 5; // number of leafs per branch
 float factor = 2; // controls how fast branch sizes decrease
-int currentIndex;
+int currentIndex = 0; // checks for the initial static branch drawing;
 /*******************************/
 // - KORCH SNOWFLAKE MEMBER VARIABLES
-
+GLfloat oldX = -0.7, oldY = -0.5;
 /*******************************/
 
 FractalTypes currentType;
@@ -121,6 +121,25 @@ void DrawFractalTree(float x, float y, float angle0, float level) {
 		DrawFractalTree(x2, y2, atan2((y2 - y), (x2 - x)), level + 1);
 	}
 	currentIndex = 0;
+}
+
+void DrawKochSnowflake(GLfloat dir, GLfloat length, GLint iter) {
+	GLdouble dirRad = 0.0174533 * dir;
+	if (iter == 0) {
+		sommets.push_back(vec3(0.0, -1.0, 0));
+		sommets.push_back(vec3(0.0, -0.5, 0));
+		couleur.push_back(vec3((rand() % 255) / 255.0, (rand() % 255) / 255.0, (rand() % 255) / 255.0));
+		couleur.push_back(vec3((rand() % 255) / 255.0, (rand() % 255) / 255.0, (rand() % 255) / 255.0));
+		glUseProgram(shaderProgram);
+		prepareBuffers();
+		glLineWidth(3);
+		glDrawArrays(GL_LINES, 0, 2);
+		currentIndex += 1;
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+		sommets.clear();
+		couleur.clear();
+	}
 }
 
 #pragma endregion

@@ -1,3 +1,8 @@
+// - DOCUMENTATION
+// https://xp-dev.com/sc/93479/2/%2Fsnowflake.c
+// https://github.com/dchhetri/Recursive-Play-with-OpenGL
+
+
 // --- STRUCTURES
 struct Color {
 	float red;
@@ -14,7 +19,6 @@ struct Color {
 		blue = pBlue;
 	}
 };
-
 
 struct Position {
 	float x;
