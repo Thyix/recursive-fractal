@@ -17,7 +17,8 @@ float factor = 2; // controls how fast branch sizes decrease
 int currentIndex = 0; // checks for the initial static branch drawing;
 /*******************************/
 // - KORCH SNOWFLAKE VARIABLES
-GLfloat oldX = -0.7, oldY = -0.5;
+GLfloat oldX = -0.65, oldY = 0.4;
+std::vector<float> Scales;
 /*******************************/
 
 FractalTypes currentType;
@@ -75,6 +76,7 @@ void initShaders()
 #pragma region Fractal Drawing
 
 void DrawFractalTree(float x, float y, float angle0, float level) {
+	glm::mat4 trans = glm::mat4(1.0);
 	if (currentIndex == 0) {
 		sommets.push_back(vec3(0.0, -1.0, 0));
 		sommets.push_back(vec3(0.0, -0.5, 0));
@@ -82,7 +84,8 @@ void DrawFractalTree(float x, float y, float angle0, float level) {
 		couleur.push_back(vec3((rand() % 255) / 255.0, (rand() % 255) / 255.0, (rand() % 255) / 255.0));
 		glUseProgram(shaderProgram);
 		prepareBuffers();
-		glLineWidth(3);
+		glLineWidth(1);
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "trans"), 1, GL_FALSE, &trans[0][0]);
 		glDrawArrays(GL_LINES, 0, 2);
 		currentIndex += 1;
 		glDisableVertexAttribArray(0);
@@ -97,21 +100,23 @@ void DrawFractalTree(float x, float y, float angle0, float level) {
 	int i;
 	for (i = 0; i < level; i++)
 	{
-		if (level <= 2) angle = rand() % (120 - 60 + 1) + 60;
-		else angle = rand() % 180;
+		/*if (level <= 2) angle = rand() % (120 - 60 + 1) + 60;
+		else*/ angle = rand() % 180;
 		cos0 = cos(angle);
 		sin0 = sin(angle);
 		x2 = x + r * cos0;
 		y2 = y + r * sin0;
 		// if the branch is below the tree / screen
-		if (y2 >= -100 && y2 <= -0.5) y2 = abs(y2) - 0.75;
+		if (y2 >= -100 && y2 <= -0.3) y2 = abs(y2) - 0.5;
 		sommets.push_back(vec3(x, y, 0));
 		sommets.push_back(vec3(x2, y2, 0));
 		couleur.push_back(vec3((rand() % 255) / 255.0, (rand() % 255) / 255.0, (rand() % 255) / 255.0));
 		couleur.push_back(vec3((rand() % 255) / 255.0, (rand() % 255) / 255.0, (rand() % 255) / 255.0));
 		glUseProgram(shaderProgram);
 		prepareBuffers();
-		glLineWidth(3);
+		glLineWidth(1);
+		trans = glm::mat4(1.0);
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "trans"), 1, GL_FALSE, &trans[0][0]);
 		glDrawArrays(GL_LINES, 0, 2);
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
@@ -125,21 +130,46 @@ void DrawFractalTree(float x, float y, float angle0, float level) {
 
 void DrawKochSnowflake(GLfloat dir, GLfloat length, GLint iter) {
 	GLdouble dirRad = 0.0174533 * dir;
+	GLfloat newX = oldX + length * cos(dirRad);
+	GLfloat newY = oldY + length * sin(dirRad);
+	glm::mat4 trans = glm::mat4(1.0);
+	Scales.push_back(0.0);
 	if (iter == 0) {
-		sommets.push_back(vec3(0.0, -1.0, 0));
-		sommets.push_back(vec3(0.0, -0.5, 0));
+		sommets.push_back(vec3(oldX, oldY, 0));
+		sommets.push_back(vec3(newX, newY, 0));
 		couleur.push_back(vec3((rand() % 255) / 255.0, (rand() % 255) / 255.0, (rand() % 255) / 255.0));
 		couleur.push_back(vec3((rand() % 255) / 255.0, (rand() % 255) / 255.0, (rand() % 255) / 255.0));
 		glUseProgram(shaderProgram);
 		prepareBuffers();
 		glLineWidth(3);
+
+		trans = glm::mat4(1.0);
+		trans = glm::rotate(trans, Scales[currentIndex], glm::vec3(0.0, 0.0, 1.0));
+		trans = glm::scale(trans, glm::vec3(sinf(Scales[currentIndex]), sinf(Scales[currentIndex]), 1.0));
+
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "trans"), 1, GL_FALSE, &trans[0][0]);
+
+
 		glDrawArrays(GL_LINES, 0, 2);
 		currentIndex += 1;
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		sommets.clear();
 		couleur.clear();
+		oldY = newY;
+		oldX = newX;
 	}
+	else {
+		iter--;
+		DrawKochSnowflake(dir, length, iter);
+		dir += 60.0;
+		DrawKochSnowflake(dir, length, iter);
+		dir -= 120.0;
+		DrawKochSnowflake(dir, length, iter);
+		dir += 60.0;
+		DrawKochSnowflake(dir, length, iter);
+	}
+	currentIndex = 0;
 }
 
 #pragma endregion
@@ -150,6 +180,11 @@ void renduScene()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	if (currentType == FRACTAL_TREE) DrawFractalTree(0, -0.5, PI / 2, 2);
+	if (currentType == KORCH_SNOWFLAKE) {
+		DrawKochSnowflake(0.0, 0.05, 3);
+		DrawKochSnowflake(-120.0, 0.05, 3);
+		DrawKochSnowflake(120.0, 0.05, 3);
+	}
 	glFlush();
 }
 
@@ -161,13 +196,27 @@ void handlePress(uchar key, int x, int y) {
 		break;
 	case 'a':
 		currentType = FRACTAL_TREE;
-		levelmax = (rand() % 4) + 2;
+		currentIndex = 0;
+		levelmax = (rand() % 5) + 2;
 		glutPostRedisplay();
 		break;
 	case 27:
 		exit(0);
 		break;
 	}
+}
+
+void animationFunc(int valeur)
+{
+	if (Scales.size() >= 16000) Scales.clear();
+	if (currentType == KORCH_SNOWFLAKE) {
+		for (int i = 0; i < Scales.size(); i++)
+		{
+			Scales[i] += 0.05f;
+		}
+		glutPostRedisplay();
+	}
+	glutTimerFunc(50, animationFunc, 0);
 }
 
 /******************************************/
@@ -196,6 +245,7 @@ int main(int argc, char **argv)
 
 	glutDisplayFunc(renduScene);
 	glutKeyboardFunc(handlePress);
+	glutTimerFunc(0, animationFunc, 0);
 	glutCloseFunc(fermeture);
 
 	glutMainLoop();
