@@ -17,7 +17,7 @@ float factor = 2; // controls how fast branch sizes decrease
 int currentIndex = 0; // checks for the initial static branch drawing;
 /*******************************/
 // - KORCH SNOWFLAKE VARIABLES
-GLfloat oldX = -0.65, oldY = 0.4;
+GLfloat oldX = -0.7, oldY = 0.4;
 std::vector<float> Scales;
 /*******************************/
 
