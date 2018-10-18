@@ -9,7 +9,7 @@
 
 ### Fractal tree and Korch snowflake recursive drawing
 
-###### The goal of this project is to make simple, multicolored recursive drawings that can also be manipulated randomly. I realized it all by recreating a fractal tree and the korch snowflake.
+###### The goal of this project is to make simple, multicolored recursive drawings that can also be manipulated randomly. I realized it all by recreating a fractal tree and the koch snowflake.
 ---
 
 ## Prerequisites
