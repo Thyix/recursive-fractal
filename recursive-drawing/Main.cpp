@@ -97,14 +97,14 @@ void DrawFractalTree(float x, float y, float angle0, float level) {
 	int i;
 	for (i = 0; i < level; i++)
 	{
-
-		angle = rand() % 180;
+		if (level <= 2) angle = rand() % (120 - 60 + 1) + 60;
+		else angle = rand() % 180;
 		cos0 = cos(angle);
 		sin0 = sin(angle);
 		x2 = x + r * cos0;
 		y2 = y + r * sin0;
 		// if the branch is below the tree / screen
-		if (y2 >= -100 && y2 <= -0.3) y2 = abs(y2) - 0.5;
+		if (y2 >= -100 && y2 <= -0.5) y2 = abs(y2) - 0.75;
 		sommets.push_back(vec3(x, y, 0));
 		sommets.push_back(vec3(x2, y2, 0));
 		couleur.push_back(vec3((rand() % 255) / 255.0, (rand() % 255) / 255.0, (rand() % 255) / 255.0));
