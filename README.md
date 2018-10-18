@@ -4,8 +4,8 @@
   <img src="https://api.codacy.com/project/badge/Grade/e28ff30817f945c4b782a383e2711f8d"/></a><br>
   Made with OpenGL and recursive functions in C++
   </p>
-
-> 🕺 💃 Made with OpenCV and a lot of love, this project is a simple, fast and efficient implementation of one of the many ways to make a motion detector. If you want to contribute to this project, do not hesitate to submit your ideas 📸  🖼
+  
+> 🌳Simple drawing of a fractal tree and the korch snowflake, made with OpenGL and recursive functions  ❄️  ⚡
 
 ### Fractal tree and Korch snowflake recursive drawing
 
