@@ -5,7 +5,7 @@
   Made with OpenGL and recursive functions in C++
   </p>
   
->  🌳  Simple drawing of a fractal tree and the korch snowflake, made with OpenGL and recursive functions  ❄️  ⚡
+>  🌳  Simple drawing of a fractal tree and the koch snowflake, made with OpenGL and recursive functions  ❄️  ⚡
 
 ### Fractal tree and Korch snowflake recursive drawing
 
