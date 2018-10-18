@@ -1,22 +1,22 @@
 #include "OpenGLHeaders.h"
 
+/*******************************/
+// - SHADER VARIABLES
 GLuint shaderProgram;
 GLuint vertexbuffer;
 GLuint colorbuffer;
-
 /*******************************/
-
-std::vector<glm::vec3> couleur;
-std::vector<glm::vec3> sommets;
-
+// - MEMBER VARIABLES
+std::vector<glm::vec3> couleur; // store the color for each vertex
+std::vector<glm::vec3> sommets; // store the vertex position
 /*******************************/
-// - FRACTAL TREE MEMBER VARIABLES
+// - FRACTAL TREE VARIABLES
 int levelmax = 5; // maximum level of recursion
 int nleaf = 5; // number of leafs per branch
 float factor = 2; // controls how fast branch sizes decrease
 int currentIndex = 0; // checks for the initial static branch drawing;
 /*******************************/
-// - KORCH SNOWFLAKE MEMBER VARIABLES
+// - KORCH SNOWFLAKE VARIABLES
 GLfloat oldX = -0.7, oldY = -0.5;
 /*******************************/
 
