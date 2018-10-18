@@ -5,11 +5,11 @@
   Made with OpenGL and recursive functions in C++
   </p>
   
->  🌳  Simple drawing of a fractal tree and the korch snowflake, made with OpenGL and recursive functions  ❄️  ⚡
+>  🌳  Simple drawing of a fractal tree and the koch snowflake, made with OpenGL and recursive functions  ❄️  ⚡
 
 ### Fractal tree and Korch snowflake recursive drawing
 
-###### The goal of this project is to make simple, multicolored recursive drawings that can also be manipulated randomly. I realized it all by recreating a fractal tree and the korch snowflake.
+###### The goal of this project is to make simple, multicolored recursive drawings that can also be manipulated randomly. I realized it all by recreating a fractal tree and the koch snowflake.
 ---
 
 ## Prerequisites
