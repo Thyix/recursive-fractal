@@ -34,7 +34,6 @@ void prepareBuffers()
 	// Give our vertices to OpenGL.
 	glBufferData(GL_ARRAY_BUFFER, sommets.size() * sizeof(float) * 3, sommets.data(), GL_STREAM_DRAW);
 
-
 	glVertexAttribPointer(
 		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
 		3,                  // size
@@ -45,7 +44,6 @@ void prepareBuffers()
 	);
 
 	glEnableVertexAttribArray(0);
-
 
 	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
 	glBufferData(GL_ARRAY_BUFFER, couleur.size() * sizeof(float) * 3, couleur.data(), GL_STATIC_DRAW);
@@ -58,7 +56,6 @@ void prepareBuffers()
 		0,
 		NULL
 	);
-
 	glEnableVertexAttribArray(1);
 }
 
@@ -149,7 +146,6 @@ void DrawKochSnowflake(GLfloat dir, GLfloat length, GLint iter) {
 
 		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "trans"), 1, GL_FALSE, &trans[0][0]);
 
-
 		glDrawArrays(GL_LINES, 0, 2);
 		currentIndex += 1;
 		glDisableVertexAttribArray(0);
@@ -235,22 +231,18 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
 	glutInitWindowSize(800, 600);
 	glutCreateWindow("Travail Pratique 2");
-
 	/*******************/
-
 	glewInit();
 	initShaders();
 	glClearColor(0.0, 0.0, 0.0, 1.0);
-
 	/******************/
-
 	glutDisplayFunc(renduScene);
 	glutKeyboardFunc(handlePress);
 	glutTimerFunc(0, animationFunc, 0);
 	glutCloseFunc(fermeture);
-
+	/******************/
 	glutMainLoop();
-
+	/******************/
 	glDeleteBuffers(1, &vertexbuffer);
 	glDeleteBuffers(1, &colorbuffer);
 	glDeleteProgram(shaderProgram);
