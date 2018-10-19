@@ -17,7 +17,7 @@ float factor = 2; // controls how fast branch sizes decrease
 int currentIndex = 0; // checks for the initial static branch drawing;
 /*******************************/
 // - KORCH SNOWFLAKE VARIABLES
-GLfloat oldX = -0.7, oldY = 0.4;
+GLfloat oldX = -0.875, oldY = 0.485;
 std::vector<float> Scales;
 /*******************************/
 
@@ -181,9 +181,9 @@ void renduScene()
 	glClear(GL_COLOR_BUFFER_BIT);
 	if (currentType == FRACTAL_TREE) DrawFractalTree(0, -0.5, PI / 2, 2);
 	if (currentType == KORCH_SNOWFLAKE) {
-		DrawKochSnowflake(0.0, 0.05, 3);
-		DrawKochSnowflake(-120.0, 0.05, 3);
-		DrawKochSnowflake(120.0, 0.05, 3);
+		DrawKochSnowflake(0.0, 0.02, 4);
+		DrawKochSnowflake(-120.0, 0.02, 4);
+		DrawKochSnowflake(120.0, 0.02, 4);
 	}
 	glFlush();
 }
@@ -208,7 +208,8 @@ void handlePress(uchar key, int x, int y) {
 
 void animationFunc(int valeur)
 {
-	if (Scales.size() >= 16000) Scales.clear();
+	// 16000 for clearing 3 iterations / 65000 for 4 iterations
+	if (Scales.size() >= 65000) Scales.clear();
 	if (currentType == KORCH_SNOWFLAKE) {
 		for (int i = 0; i < Scales.size(); i++)
 		{
