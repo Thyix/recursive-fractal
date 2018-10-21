@@ -4,7 +4,7 @@
 // https://github.com/brunofalmeida/RecursiveGraphics-GLUT
 
 
-// --- STRUCTURES
+// - STRUCTURES
 struct Color {
 	float red;
 	float green;
@@ -30,14 +30,14 @@ struct Position {
 	}
 };
 
-// ENUMERATIONS
+// - ENUMERATIONS
 enum FractalTypes {
 	NULL,
 	FRACTAL_TREE,
 	KORCH_SNOWFLAKE
 };
 
-// -- MODULES
+// - MODULES
 #include <fstream>
 #include "Dependencies\glew\glew.h"
 #include "Dependencies\freeglut\freeglut.h"
@@ -58,3 +58,6 @@ using namespace glm;
 
 // - CONSTANTS
 const float PI = 3.14159265359;
+
+// - USEFULL 
+// Set a random value between 2 values : rand()%(max-min + 1) + min;

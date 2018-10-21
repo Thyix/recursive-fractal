@@ -11,9 +11,9 @@ std::vector<glm::vec3> couleur; // store the color for each vertex
 std::vector<glm::vec3> sommets; // store the vertex position
 /*******************************/
 // - FRACTAL TREE VARIABLES
-int levelmax = 5; // maximum level of recursion
+int levelmax = 5; // maximum level of recursion (RANDOM OR NOT???)
 int nleaf = 5; // number of leafs per branch
-float factor = 2; // controls how fast branch sizes decrease
+float factor = 1.75; // controls how fast branch sizes decrease
 int currentIndex = 0; // checks for the initial static branch drawing;
 /*******************************/
 // - KORCH SNOWFLAKE VARIABLES
@@ -95,15 +95,15 @@ void DrawFractalTree(float x, float y, float angle0, float level) {
 	float angle;
 	float x2, y2, cos0, sin0;
 	int i;
-	for (i = 0; i < level; i++)
+	// set smaller than level to increase number of branch at each level (RANDOM OR NOT???)
+	for (i = 0; i < (rand() % (4 - 1 + 1) + 1); i++)
 	{
-		/*if (level <= 2) angle = rand() % (120 - 60 + 1) + 60;
-		else*/ angle = rand() % 180;
+		angle = rand() % 180;
 		cos0 = cos(angle);
 		sin0 = sin(angle);
 		x2 = x + r * cos0;
 		y2 = y + r * sin0;
-		// if the branch is below the tree / screen
+		// if the branch is below the base / screen
 		if (y2 >= -100 && y2 <= -0.3) y2 = abs(y2) - 0.5;
 		sommets.push_back(vec3(x, y, 0));
 		sommets.push_back(vec3(x2, y2, 0));
@@ -193,7 +193,6 @@ void handlePress(uchar key, int x, int y) {
 	case 'a':
 		currentType = FRACTAL_TREE;
 		currentIndex = 0;
-		levelmax = (rand() % 5) + 2;
 		glutPostRedisplay();
 		break;
 	case 27:
@@ -230,7 +229,7 @@ int main(int argc, char **argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("Travail Pratique 2");
+	glutCreateWindow("Travail Pratique 2 par William Garneau");
 	/*******************/
 	glewInit();
 	initShaders();
