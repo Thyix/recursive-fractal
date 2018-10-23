@@ -61,3 +61,4 @@ const float PI = 3.14159265359;
 
 // - USEFULL 
 // Set a random value between 2 values : rand()%(max-min + 1) + min;
+// Set a decrease factor which multiply at every level :  r = value / pow(factor, level - currentLevel);
